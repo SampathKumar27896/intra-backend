@@ -1,11 +1,20 @@
-import { Controller, Post, Body } from "@nestjs/common";
+import { Controller, Post, Body, UsePipes } from "@nestjs/common";
+import { AuthService } from "./auth.service";
+import {
+  registerUserSchema,
+  type RegisterUserDto,
+} from "./auth.validationPipes";
+import { ZodValidationPipe } from "../app.validationPipe";
 
 @Controller()
 export class AuthController {
-  constructor() {}
+  constructor(private authService: AuthService) {}
+
   @Post("/register")
-  registerUser() {
-    return { status: true, message: "User registered successfully" };
+  @UsePipes(new ZodValidationPipe(registerUserSchema))
+  registerUser(@Body() registerUserDto: RegisterUserDto) {
+    console.log(registerUserDto);
+    return this.authService.createUser(registerUserDto);
   }
 
   @Post("/login")
