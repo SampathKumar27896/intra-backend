@@ -12,9 +12,9 @@ export class AuthController {
 
   @Post("/register")
   @UsePipes(new ZodValidationPipe(registerUserSchema))
-  registerUser(@Body() registerUserDto: RegisterUserDto) {
-    console.log(registerUserDto);
-    return this.authService.createUser(registerUserDto);
+  async registerUser(@Body() registerUserDto: RegisterUserDto) {
+    await this.authService.createUser(registerUserDto);
+    return { message: "Registration success" };
   }
 
   @Post("/login")
