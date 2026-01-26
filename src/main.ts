@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser());
   app.enableCors({
-    origin: ["https://intra-client.vercel.app/"],
+    origin: ["https://intra-client.vercel.app"],
     credentials: true,
   });
   app.setGlobalPrefix("api");
