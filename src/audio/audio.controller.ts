@@ -6,12 +6,12 @@ import {
   Patch,
   Param,
   Delete,
-  Query,
+  UseGuards,
 } from "@nestjs/common";
 import { AudioService } from "./audio.service";
 import { CreateAudioDto } from "./dto/create-audio.dto";
 import { UpdateAudioDto } from "./dto/update-audio.dto";
-import { AudioResponseDto } from "./dto/get-audio-list.dto";
+import { AuthGuard } from "../auth/auth.guard";
 
 @Controller("audio")
 export class AudioController {
@@ -23,6 +23,7 @@ export class AudioController {
   }
 
   @Get()
+  @UseGuards(AuthGuard)
   async findAll() {
     const songList = await this.audioService.findAll();
     return {
@@ -32,6 +33,7 @@ export class AudioController {
   }
 
   @Post("getSong")
+  @UseGuards(AuthGuard)
   async getAudio(@Body("songId") songId: string) {
     console.log("coming here", songId);
     const songUrl = await this.audioService.getOrUpdateAudio(songId);

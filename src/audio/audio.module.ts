@@ -5,10 +5,11 @@ import { AudioController } from "./audio.controller";
 import { DatabaseModule } from "../db/database.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { AudioSchemaFactory } from "./audio.schema";
+import { AuthModule } from "../auth/auth.module";
 import { Connection } from "mongoose";
 
 @Module({
-  imports: [ConfigModule, DatabaseModule, StorageModule],
+  imports: [ConfigModule, DatabaseModule, StorageModule, AuthModule],
   controllers: [AudioController],
   providers: [
     AudioService,

@@ -46,6 +46,7 @@ export class AuthService {
       { userName: auth.userName, sub: auth.email },
       {
         secret: jwtSecret,
+        expiresIn: "1h",
       },
     );
     return jwtToken;
