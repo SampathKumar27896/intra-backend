@@ -5,6 +5,7 @@ import {
   HttpException,
   HttpStatus,
   BadRequestException,
+  UnauthorizedException,
 } from "@nestjs/common";
 import { Request, Response } from "express";
 
@@ -14,13 +15,16 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
-
-    let status = HttpStatus.INTERNAL_SERVER_ERROR;
+    console.log(exception);
+    let statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
     let message = "Internal server error";
     //console.log(exception);
     // Handle HTTP exceptions
-    if (exception instanceof BadRequestException) {
-      status = exception.getStatus();
+    if (
+      exception instanceof BadRequestException ||
+      exception instanceof UnauthorizedException
+    ) {
+      statusCode = exception.getStatus();
       message = exception.message;
     }
     // Handle non-HTTP errors
@@ -29,9 +33,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
     }
     console.log("Exception coming here", exception);
     // Send formatted error response
-    response.status(status).json({
+    response.status(statusCode).json({
       status: false,
-      statusCode: status,
+      statusCode: statusCode,
       data: [],
       message,
     });

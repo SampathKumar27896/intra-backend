@@ -30,7 +30,7 @@ export class ResponseInterceptor<T>
       map((responseData) => {
         // Allow controllers to define custom message and data structure
         const message = responseData?.message || "Success";
-        const data = responseData.data? responseData.data : {};
+        const data = responseData.data ? responseData.data : {};
 
         return {
           status: true,

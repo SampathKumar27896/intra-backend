@@ -1,14 +1,18 @@
-import { Controller, Get, Post, Body } from "@nestjs/common";
+import { Controller, Get, Post, Body, UseGuards } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { createResourceDTO } from "./create-resource.dto";
-
-@Controller()
+import { AuthGuard } from "./auth/auth.guard";
+@Controller("home")
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @UseGuards(AuthGuard)
+  getHello() {
+    return {
+      message: "Welcome home!",
+      data: { greeting: this.appService.getHello() },
+    };
   }
 
   @Post("/create")

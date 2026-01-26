@@ -36,8 +36,7 @@ export const AuthSchemaFactory = (
       const saltRounds: number = parseInt(
         configService.get<string>("SALT_ROUND", "10"),
       );
-      const saltSecret: string = configService.get<string>("SALT_PASSWORD", "");
-      this.password = await bcrypt.hash(saltSecret, saltRounds);
+      this.password = await bcrypt.hash(this.password, saltRounds);
       next();
     } catch (error) {
       next(error);
