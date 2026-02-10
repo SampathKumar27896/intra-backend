@@ -42,7 +42,7 @@ export class AuthController {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "none",
-        maxAge: 60000,
+        maxAge: 60 * 60 * 1000,
       });
       return {
         message: "Login success",
