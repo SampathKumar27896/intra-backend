@@ -2,13 +2,13 @@ import { Module } from "@nestjs/common";
 import { AuthController } from "./auth.controller";
 import { DatabaseModule } from "../db/database.module";
 import { AuthService } from "./auth.service";
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ConfigService } from "@nestjs/config";
 import { AuthSchemaFactory } from "./auth.schema";
 import { Connection } from "mongoose";
 import { JwtService } from "@nestjs/jwt";
 import { AuthGuard } from "./auth.guard";
 @Module({
-  imports: [ConfigModule, DatabaseModule],
+  imports: [DatabaseModule],
 
   controllers: [AuthController],
   providers: [

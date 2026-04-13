@@ -3,13 +3,13 @@ import { AudioService } from "./audio.service";
 import { StorageModule } from "../storage/storage.module";
 import { AudioController } from "./audio.controller";
 import { DatabaseModule } from "../db/database.module";
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ConfigService } from "@nestjs/config";
 import { AudioSchemaFactory } from "./audio.schema";
 import { AuthModule } from "../auth/auth.module";
 import { Connection } from "mongoose";
 
 @Module({
-  imports: [ConfigModule, DatabaseModule, StorageModule, AuthModule],
+  imports: [DatabaseModule, StorageModule, AuthModule],
   controllers: [AudioController],
   providers: [
     AudioService,
