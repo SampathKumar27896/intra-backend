@@ -17,19 +17,15 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
     console.log(exception);
     let statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-    let message = "Internal server error";
+    let message = "Internal Server Error";
     //console.log(exception);
     // Handle HTTP exceptions
-    if (
-      exception instanceof BadRequestException ||
-      exception instanceof UnauthorizedException
-    ) {
+    if (exception instanceof HttpException) {
+      console.log("Instance of Exception", exception instanceof HttpException);
       statusCode = exception.getStatus();
-      message = exception.message;
     }
-    // Handle non-HTTP errors
-    else if (exception instanceof Error) {
-      message = exception.message;
+    if (exception instanceof HttpException || exception instanceof Error) {
+      message = exception?.message;
     }
     console.log("Exception coming here", exception);
     // Send formatted error response
