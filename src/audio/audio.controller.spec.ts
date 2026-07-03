@@ -1,4 +1,3 @@
-
 jest.mock("mongoose", () => {
   const actualMongoose = jest.requireActual("mongoose");
   return {
@@ -53,7 +52,7 @@ describe("AudioController", () => {
         {
           provide: ConfigService,
           useValue: {
-            get: jest.fn().mockReturnValue("")
+            get: jest.fn().mockReturnValue(""),
           },
         },
       ],

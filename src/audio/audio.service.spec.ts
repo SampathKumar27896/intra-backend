@@ -20,7 +20,7 @@ describe("AudioService", () => {
             findById: jest.fn().mockReturnThis(),
             updateOne: jest.fn().mockReturnThis(),
             exec: jest.fn(),
-            select: jest.fn()
+            select: jest.fn(),
           },
         },
         {
@@ -32,8 +32,8 @@ describe("AudioService", () => {
         {
           provide: ConfigService,
           useValue: {
-            get: jest.fn().mockReturnValue("")
-          }
+            get: jest.fn().mockReturnValue(""),
+          },
         },
       ],
     }).compile();
@@ -44,7 +44,7 @@ describe("AudioService", () => {
     storageService = module.get<StorageService>(StorageService);
   });
 
-  test("findAll", async() => {
+  test("findAll", async () => {
     const expectedResult: AudioResponseDto[] = [
       {
         id: "aud-9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
@@ -52,18 +52,18 @@ describe("AudioService", () => {
         movie: "The Wash",
         fileName: "the_next_episode_2001.mp3",
         createdAt: new Date("2026-01-15T08:30:00Z"),
-        updatedAt: new Date("2026-06-05T10:28:00Z")
-      }
-    ]
+        updatedAt: new Date("2026-06-05T10:28:00Z"),
+      },
+    ];
     jest.spyOn(audioModel, "exec").mockResolvedValue(expectedResult);
     const actualResult = await audioService.findAll();
     expect(actualResult).toEqual(expectedResult);
   });
 
-  test("getOrUpdateAudio", async() => {
+  test("getOrUpdateAudio", async () => {
     const selectResult = {
       fileUrl: "https://fileUrl",
-      fileName: "Samplefile.mp3"
+      fileName: "Samplefile.mp3",
     };
     const bucketPath = "storage/music";
     const signedUrl = "https://signedUrl";
@@ -74,8 +74,14 @@ describe("AudioService", () => {
 
     const actualResult = await audioService.getOrUpdateAudio("songId");
     expect(audioModel.select).toHaveBeenCalledWith("fileUrl fileName");
-    expect(storageService.getSignedUrl).toHaveBeenCalledWith(bucketPath, selectResult.fileName);
-    expect(audioModel.updateOne).toHaveBeenCalledWith({_id: "songId"}, { $set: { fileUrl: signedUrl}});
+    expect(storageService.getSignedUrl).toHaveBeenCalledWith(
+      bucketPath,
+      selectResult.fileName,
+    );
+    expect(audioModel.updateOne).toHaveBeenCalledWith(
+      { _id: "songId" },
+      { $set: { fileUrl: signedUrl } },
+    );
     expect(actualResult).toBe(signedUrl);
-  })
+  });
 });
