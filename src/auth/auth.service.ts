@@ -2,7 +2,7 @@ import { Injectable, Inject } from "@nestjs/common";
 import {
   type RegisterUserDto,
   type LoginUserDto,
-} from "./auth.validationPipes";
+} from "./auth.dto";
 import { Model } from "mongoose";
 import { ConfigService } from "@nestjs/config";
 import * as bcrypt from "bcrypt";

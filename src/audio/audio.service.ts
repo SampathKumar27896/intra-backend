@@ -22,18 +22,10 @@ export class AudioService {
     private readonly storageService: StorageService,
     private configService: ConfigService,
   ) {}
-  create() {
-    return "This action adds a new audio";
-  }
 
   async findAll(): Promise<AudioResponseDto[]> {
     const result = await this.audioModel.find({}, { filePath: 0 }).exec();
-    console.log(result);
     return result;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} audio`;
   }
 
   async getOrUpdateAudio(songId: string) {
@@ -54,13 +46,5 @@ export class AudioService {
       { $set: { fileUrl: signedUrl } },
     );
     return signedUrl;
-  }
-
-  update(id: number, updateAudioDto: UpdateAudioDto) {
-    return `This action updates a #${id} audio`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} audio`;
   }
 }

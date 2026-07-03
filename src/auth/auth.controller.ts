@@ -13,7 +13,7 @@ import {
   loginUserSchema,
   type RegisterUserDto,
   type LoginUserDto,
-} from "./auth.validationPipes";
+} from "./auth.dto";
 import { ZodValidationPipe } from "../app.validationPipe";
 import type { Response } from "express";
 
