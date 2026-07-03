@@ -17,11 +17,6 @@ import { AuthGuard } from "../auth/auth.guard";
 export class AudioController {
   constructor(private readonly audioService: AudioService) {}
 
-  @Post()
-  create(@Body() createAudioDto: CreateAudioDto) {
-    return this.audioService.create();
-  }
-
   @Get()
   @UseGuards(AuthGuard)
   async findAll() {
@@ -38,19 +33,5 @@ export class AudioController {
     console.log("coming here", songId);
     const songUrl = await this.audioService.getOrUpdateAudio(songId);
     return { data: { songUrl: songUrl } };
-  }
-  @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.audioService.findOne(+id);
-  }
-
-  @Patch(":id")
-  update(@Param("id") id: string, @Body() updateAudioDto: UpdateAudioDto) {
-    return this.audioService.update(+id, updateAudioDto);
-  }
-
-  @Delete(":id")
-  remove(@Param("id") id: string) {
-    return this.audioService.remove(+id);
   }
 }
